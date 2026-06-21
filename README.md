@@ -1,84 +1,65 @@
 # CARTMIND-AI
-
-Smart Shopping AI: Predictive Return Reduction Engine
-
-Smart Shopping AI is a pre-purchase intelligence layer designed to mitigate the "return crisis" in e-commerce—specifically in apparel and footwear, where return rates often exceed 20–30%
-. Unlike traditional reactive logistics tools, this system uses Explainable AI (XAI) to predict return probability before checkout, intervening at the point of decision to improve purchase quality and preserve retail margins
-.
-📉 The Problem
-Online shopping lacks the ability to physically inspect products, leading to a "decision-quality problem"
-. This results in:
-Bracketing: Customers ordering multiple sizes with the intent to return most of them
-.
-Sizing Inconsistency: Static size charts fail to account for brand-to-brand variance
-.
-High Operational Costs: Every return incurs reverse shipping, inspection, and restocking fees
-.
-🚀 Core Solution: The 11 AI Engines
-The system is powered by eleven specialized engines working in a continuous feedback loop
+Smart Shopping AI: Return Reduction Engine
+This repository contains the core logic and service architecture for the Smart Shopping AI, a predictive engine designed to reduce e-commerce returns by intervening before checkout.
+🏗 Project Structure
+The codebase is organized into five service layers as defined in the system architecture
 :
-User Profile AI: Builds behavioral and physical profiles for every shopper
+├── src/
+│   ├── experience_layer/      # UI widgets (Product Page, Checkout Banners)
+│   ├── decisioning_layer/     # Real-time scoring APIs (Risk & XAI)
+│   ├── intelligence_layer/    # Model Registry & Feature Stores (User/Product Models)
+│   ├── data_layer/            # NLP pipelines & Transaction/Return logs
+│   └── automation_layer/      # Retraining jobs & Self-Learning Loops
+├── models/                    # Serialized GBT and NLP model files
+├── scripts/                   # Batch retraining and daily insight generation
+└── tests/                     # Precision/Recall validation and A/B test logic
+🛠 Tech Stack
+Modeling: Supervised classification (Gradient-Boosted Trees) for risk prediction; NLP for text classification and sentiment extraction
 .
-Product Intelligence: Uses NLP to mine customer reviews for "Risk Tags" like "runs small" or "color mismatch"
+Infrastructure: Real-time path optimized for low-latency (<300ms) responses
 .
-Return Risk Prediction: The central model calculating a 0–100% risk score for every user-product pairing
+Data Strategy: A centralized Feature Store pre-computes low-latency user/product features for real-time inference
 .
-Return Reason AI (XAI): Translates model weights into human-readable explanations (e.g., "Similar shoppers found this tight in the shoulders")
+🔌 API Endpoints (Core Engines)
+1. Get Return Risk Score
+Endpoint: POST /v2/predict-risk
+Inputs: user_id, product_id, selected_size, variant_id
 .
-Virtual Fit Simulator: Estimates fit (tight/perfect/loose) by specific body zones
+Logic: Combines User Profile AI (behavioral/physical data) with Product Intelligence (review-mined risk tags)
 .
-Smart Size Recommendation: Suggests the single most likely size to fit based on historical brand patterns
+Response: risk_score (0-100), risk_level (Low/Med/High), and explanation_text
 .
-Alternative Product Recommender: Redirects shoppers toward lower-risk, similar-style items
+2. Get Size Recommendation
+Endpoint: GET /v2/recommend-size
+Logic: Cross-references user body profiles against brand-specific sizing patterns
 .
-Return Prevention Mode: Triggers real-time, non-blocking warning banners before high-risk checkouts
+Response: recommended_size, confidence_level
 .
-One-Click Smart Checkout: Bypasses manual selection for high-confidence returning shoppers
+3. Generate Explainable Reason (XAI)
+Endpoint: GET /v2/explain
+Logic: Translates the top contributing model features into one of four standard categories: Size, Fabric, Expectation, or Quality
 .
-Smart Shopper Score: A gamified 0–100 metric rewarding purchase accuracy and AI engagement
+🔄 The Self-Learning Loop
+The most critical automation in this repository is the Self-Learning Loop
 .
-Future Return Prediction Timeline: Compares the predicted outcomes of following AI advice vs. manual selection
+Triggers: Triggered by PURCHASE_COMPLETED or RETURN_INITIATED events
 .
-🏗️ Technical Architecture
-The system follows a loosely coupled, layered architecture
-:
-Experience Layer: UI widgets, risk badges, and warning banners
+Action: Updates the training dataset and triggers model recalibration to ensure the engine "learns" from every outcome
 .
-Decisioning Layer: Real-time scoring and recommendation services
+🧪 Testing & Evaluation
+Before promotion to production, all models must pass:
+Precision Audit: Ensuring "High-Risk" flags have high accuracy to prevent user alert fatigue
 .
-Intelligence Layer: Model registry and feature stores for User and Product models
+Fairness Check: Auditing scores for disparate impact across non-standard body types
 .
-Data Layer: Transaction stores, review/NLP pipelines, and return event logs
+A/B Validation: Measuring the Return Rate Reduction (RRR) against a held-out control group
 .
-Automation Layer: Event-driven triggers for onboarding and the Self-Learning Loop
+🚀 Setup & Integration
+Sync Data Layers: Connect to the PIM (Product Catalog) and OMS (Order Management)
 .
-Tech Stack Insights
-Modeling: Gradient-boosted trees for structured risk prediction and NLP for unstructured review mining
+Initialize Models: Run the NLP pipeline on existing review text to generate initial Product Risk Tags
 .
-Latency: Real-time path target is <300ms to prevent blocking page renders
+Configure Thresholds: Set the risk percentage (default 70%) that triggers Return Prevention Mode
 .
-Integration: Connects via API to Product Information Management (PIM), Order Management Systems (OMS), and Review Platforms
-.
-📊 Success Metrics (KPIs)
-Return Rate Reduction (RRR): The "North-Star" metric measured against a held-out control group
-.
-Prediction Precision: How often a "High-Risk" flag correctly predicted a return
-.
-Recommendation Acceptance Rate: The percentage of shoppers who act on AI-suggested sizes or alternatives
-.
-🗺️ Implementation Roadmap
-Phase 1 (Pilot): Deploy core engines (Risk, Profile, XAI) to a single high-return category like denim
-.
-Phase 2 (Expansion): Scale to all apparel/footwear and add Size Recommendations
-.
-Phase 3 (Advanced): Launch Virtual Fit Simulator, One-Click Checkout, and Smart Shopper Scores
-.
-Phase 4 (Maturity): Operationalize daily insights and expand to home goods or electronics
-.
-🛡️ Responsible AI & Privacy
-Privacy-First: Body measurements are strictly opt-in and can be deleted by the user at any time
-.
-Transparency: Every risk score must include a plain-language explanation
-.
-Fairness: Models are audited for disparate impact across non-standard body types to ensure equitable scoring
+Refer to the [FR-1 to FR-10] Functional Requirements in the documentation for full implementation details
 .
