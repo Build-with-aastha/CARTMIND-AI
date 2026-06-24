@@ -1,5 +1,10 @@
 # CARTMIND-AI
 
+## 🔗 Quick Links
+* * Live Working App:* [Click Here to Try the App](https://ai.studio/apps/13be74a6-5059-4e19-a5f8-dc5ece089296?fullscreenApplet=true)
+* * Live Demo Video:* [Watch the Video Walkthrough] (https://drive.google.com/file/d/1SeR7aZnFPlDmoA_Pz2TJwIyzCDnmtB34/view?usp=drivesdk)
+* * Case Study Walkthrough:* [Watch the Case Study Explanation Video](https://drive.google.com/file/d/1w-x6zraROZ6eHHsxls7LE647vxNpnu6W/view?usp=drivesdk) (Generated using Google NotebookLM based on my case study)
+
 # AI Return Reduction Engine — Smart Shopping AI
 ### Full Industry-Grade Product Case Study & Blueprint
 
