@@ -8,7 +8,6 @@
 ## About This Document
 
 **File:** `AI_Return_Reduction_Engine_Full_Case_Study.docx`  
-**Pages:** 45  
 **Version:** 2.0 — June 2026  
 **Domain:** E-Commerce & Retail Technology  
 **Discipline:** Applied AI / ML Product Strategy
